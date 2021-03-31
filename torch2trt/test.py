@@ -1,5 +1,5 @@
 from torch2trt import *
-from .module_test import ModuleTest, MODULE_TESTS
+from .module_test import ModuleTest, MODULE_TESTS,SINGLE_MODULE_TESTS
 import time
 import argparse
 import re
@@ -101,14 +101,15 @@ if __name__ == '__main__':
     parser.add_argument('--tolerance', help='Maximum error to print warning for entry', type=float, default='-1')
     parser.add_argument('--include', help='Addition python file to include defining additional tests', action='append', default=[])
     parser.add_argument('--use_onnx', help='Whether to test using ONNX or torch2trt tracing', action='store_true')
+    parser.add_argument('--test_single', help='test all module or test some use single_test module', action='store_false')
     args = parser.parse_args()
     
     for include in args.include:
         runpy.run_module(include)
         
     num_tests, num_success, num_tolerance, num_error = 0, 0, 0, 0
-    for test in MODULE_TESTS:
-        
+    test_modules=MODULE_TESTS if args.test_single else SINGLE_MODULE_TESTS
+    for test in test_modules:
         # filter by module name
         name = test.module_name()
         if not re.search(args.name, name):

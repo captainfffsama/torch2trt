@@ -17,6 +17,15 @@ class ModuleTest(object):
 MODULE_TESTS = [
 ]
 
+SINGLE_MODULE_TESTS = [
+]
+
+def add_single_module_test(dtype, device, input_shapes, **torch2trt_kwargs):
+    def register_module_test(module):
+        global SINGLE_MODULE_TESTS
+        SINGLE_MODULE_TESTS += [ModuleTest(module, dtype, device, input_shapes, **torch2trt_kwargs)]
+        return module
+    return register_module_test
 
 def add_module_test(dtype, device, input_shapes, enabled=True, **torch2trt_kwargs):
     def register_module_test(module):
