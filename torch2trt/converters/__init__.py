@@ -60,3 +60,5 @@ from .tensor import *
 from .transpose import *
 from .unary import *
 from .view import *
+
+from .PixelShuffle import *
