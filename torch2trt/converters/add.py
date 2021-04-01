@@ -6,6 +6,7 @@ from torch2trt.module_test import add_module_test
 @tensorrt_converter('torch.Tensor.__iadd__')
 @tensorrt_converter('torch.Tensor.__add__')
 @tensorrt_converter('torch.Tensor.__radd__')
+@tensorrt_converter('torch.Tensor.add')
 def convert_add(ctx):
     input_a = ctx.method_args[0]
     input_b = ctx.method_args[1]

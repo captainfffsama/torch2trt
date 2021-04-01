@@ -62,3 +62,4 @@ from .unary import *
 from .view import *
 
 from .PixelShuffle import *
+from .clone import *

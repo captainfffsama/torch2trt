@@ -6,6 +6,7 @@ from torch2trt.module_test import add_module_test
 @tensorrt_converter('torch.Tensor.__imul__')
 @tensorrt_converter('torch.Tensor.__mul__')
 @tensorrt_converter('torch.Tensor.__rmul__')
+@tensorrt_converter('torch.Tensor.mul')
 def convert_mul(ctx):
     input_a = ctx.method_args[0]
     input_b = ctx.method_args[1]

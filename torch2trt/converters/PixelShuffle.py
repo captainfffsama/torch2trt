@@ -39,12 +39,12 @@ class FunctionalPixelShuffle(torch.nn.Module):
     def forward(self,x):
         return torch.nn.functional.pixel_shuffle(x,self.upscale_factor)
 
-@add_single_module_test(torch.float32, torch.device('cuda'), [(1,8,2,2)])
-@add_module_test(torch.float32, torch.device('cuda'), [(1,8,2,2)])
+@add_single_module_test(torch.float32, torch.device('cuda'), [(1,8,540,960)])
+@add_module_test(torch.float32, torch.device('cuda'), [(1,8,540,960)])
 def test_functional_pixel_shuffle():
     return FunctionalPixelShuffle(2)
 
-@add_single_module_test(torch.float32, torch.device('cuda'), [(1,8,2,2)])
-@add_module_test(torch.float32, torch.device('cuda'), [(1,8,2,2)])
+@add_single_module_test(torch.float32, torch.device('cuda'), [(1,8,540,960)])
+@add_module_test(torch.float32, torch.device('cuda'), [(1,8,540,960)])
 def test_PixelShuffle():
     return torch.nn.PixelShuffle(2)
