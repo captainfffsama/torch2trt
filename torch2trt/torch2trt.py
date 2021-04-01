@@ -383,7 +383,7 @@ class ConversionContext(object):
         for hook in self.hooks:
             hook.__exit__(type, val, tb)
 
-    def add_inputs(self, torch_inputs, names=None):
+    def add_inputs(self, torch_inputs:"torch.Tensor", names=None):
         if names is None:
             names = default_input_names(len(torch_inputs))
         self.input_names = names
@@ -502,6 +502,7 @@ def torch2trt(module,
 
     inputs_in = inputs
 
+    # 取第一个batch
     # copy inputs to avoid modifications to source data
     inputs = [tensor.clone()[0:1] for tensor in inputs]  # only run single entry
 
@@ -534,7 +535,7 @@ def torch2trt(module,
         parser.parse(onnx_bytes)
         
     else:
-        network = builder.create_network()
+        network:"trt.tensorrt.INetworkDefinition" = builder.create_network()
         with ConversionContext(network, torch2trt_kwargs=kwargs) as ctx:
 
             ctx.add_inputs(inputs, input_names)
